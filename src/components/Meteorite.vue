@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>hello, I'm meteoritecomponent</h1>
     <ul>
       <li v-for="landing in meteoriteLandings">{{landing}}</li>
     </ul>
@@ -8,6 +7,7 @@
 </template>
 
 <script>
+//TODO: style each entry
 export default {
   props: ["meteoriteLandings"]
 };

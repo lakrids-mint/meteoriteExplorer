@@ -1,34 +1,29 @@
 <<template>
-  <v-container >
+  <v-container>
+    <!-- Passing props -->
     <Meteorite v-bind:meteoriteLandings="meteoriteLandings"></Meteorite>
-   
   </v-container>
 </template>
 
 <script>
-//not using this one yet
 import Meteorite from "@/components/Meteorite";
-
 import { bus } from "../main";
+
 export default {
   components: {
     Meteorite
   },
   data() {
     return {
-      //Local list of meteorites
+      //Local list of meteorites & errors
       meteoriteLandings: [],
       errors: []
     };
   },
-  methods: {
-    //local search among results
-    search: function() {
-      //do something
-    }
-  },
+  methods: {},
 
   created() {
+    //listening for search events from search component
     bus.$on("searchResult", result => {
       //loads result into local array
       if (result) {

@@ -19,12 +19,8 @@
 
 <script>
 //TODO: make clear/reset function
-//TODO: add loading?
 //TODO: handle edge cases
-//TODO: implement meteorite component
-//TODO: catch and log netwoekserror
 
-//TODO: style result
 //TODO: design
 
 import { bus } from "../main";
