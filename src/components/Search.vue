@@ -26,11 +26,11 @@
 
 <script>
 //TODO: handle edge cases
-//TODO: implement @input search
 //TODO: look up best practice for passing props/slots - read that article! and implement:)
-//TODO: make enter work!
+//TODO: style result
 
 //TODO: make it look nice and interesting!
+//TODO: implement @input search
 
 import { bus } from "../main";
 export default {

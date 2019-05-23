@@ -8,6 +8,7 @@
 
 <script>
 //TODO: style each entry
+//TODO: which data passing method to use
 export default {
   props: ["meteoriteLandings"]
 };
