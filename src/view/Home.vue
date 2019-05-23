@@ -2,7 +2,12 @@
   <v-container>
     <v-layout column align-center>
       <v-flex>
-        <h1>Search for your favourite meteorite</h1>
+        <h1 class="display-2 font-weight-thin ma-4">Meteorite Explorer</h1>
+      </v-flex>
+      <v-flex v-if="errors">
+        <ul>
+          <li v-for="error in errors">{{error}}</li>
+        </ul>
       </v-flex>
 
       <Search></Search>
@@ -14,18 +19,32 @@
 <script>
 import Search from "@/components/Search";
 import Result from "@/components/Result";
+import { bus } from "../main";
 
 export default {
   data() {
-    return {};
+    return {
+      errors: []
+    };
   },
   components: {
     Search,
     Result
   },
-  methods: {}
+  methods: {},
+  created() {
+    bus.$on("showErrors", errorList => {
+      errorList.forEach(error => {
+        this.errors.push(error);
+      });
+      console.log("from home component:", this.errors);
+    });
+  }
 };
 </script>
 
 <style>
+ul {
+  list-style: none;
+}
 </style>

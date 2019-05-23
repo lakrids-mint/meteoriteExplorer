@@ -1,6 +1,6 @@
 <template>
   <v-flex>
-    <v-data-table :headers="headers" :items="meteoriteLandings">
+    <v-data-table :headers="headers" :items="meteoriteLandings" :search="search">
       <template v-slot:items="props">
         <td>{{ props.item.name }}</td>
         <td class="text-xs-right">{{ props.item.id }}</td>
@@ -11,14 +11,24 @@
         <td class="text-xs-right">{{ props.item.year }}</td>
         <td class="text-xs-right">{{ props.item.reclat }}</td>
         <td class="text-xs-right">{{ props.item.reclong }}</td>
-        <td class="text-xs-right">{{ props.item.geolocation }}</td>
+      </template>
+      <template v-slot:no-data>
+        <v-alert :value="true" color="error" icon="warning">Sorry, no data to display here :(</v-alert>
+      </template>
+      <template v-slot:no-result>
+        <v-alert :value="true" color="error" icon="warning">Sorry, no result to display here :(</v-alert>
       </template>
     </v-data-table>
+    <ul>
+      <li v-for="meteorite in meteoriteLandings">{{meteorite}}</li>
+    </ul>
   </v-flex>
 </template>
 
 <script>
+//not using this one yet
 import Meteorite from "@/components/Meteorite";
+
 import { bus } from "../main";
 export default {
   components: {
@@ -35,71 +45,80 @@ export default {
           value: "name"
         },
         {
-          text: "id",
+          text: "Id",
           align: "right",
           sortable: true,
           value: "id"
         },
         {
-          text: "nametype",
+          text: "Nametype",
           align: "right",
           sortable: true,
           value: "nametype"
         },
         {
-          text: "recclass",
+          text: "Rec Class",
           align: "right",
           sortable: true,
           value: "recclass"
         },
         {
-          text: "mass(g)",
+          text: "Mass(g)",
           align: "right",
           sortable: true,
           value: "mass"
         },
         {
-          text: "fall",
+          text: "Fall",
           align: "right",
           sortable: true,
           value: "fall"
         },
         {
-          text: "year",
+          text: "Year",
           align: "right",
           sortable: true,
           value: "year"
         },
         {
-          text: "reclat",
+          text: "Lattitude",
           align: "right",
           sortable: true,
           value: "reclat"
         },
         {
-          text: "reclong",
+          text: "Longitude",
           align: "right",
           sortable: true,
           value: "reclong"
-        },
-        {
-          text: "geolocation",
-          align: "right",
-          sortable: true,
-          value: "geolocation"
         }
       ],
-      //LIST OF METEORITES
-      meteoriteLandings: []
+      //Local list of meteorites
+      meteoriteLandings: [],
+      errors: []
     };
   },
+  methods: {
+    //local search among results
+    search: function() {
+      //do something
+    }
+  },
+
   created() {
     bus.$on("searchResult", result => {
-      this.meteoriteLandings = result;
+      if (result) {
+        this.meteoriteLandings = result;
+        console.log("from results: ", this.meteoriteLandings);
+      }
+      if (this.meteoriteLandings.length == 0) {
+        this.errors.push("No match was found");
+        bus.$emit("showErrors", this.errors);
+      }
     });
   }
 };
 </script>
 
-<style>
+<style scoped>
 </style>
