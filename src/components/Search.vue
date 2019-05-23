@@ -21,10 +21,10 @@
 //TODO: make clear/reset function
 //TODO: add loading?
 //TODO: handle edge cases
-//TODO: load on created
 //TODO: implement meteorite component
 //TODO: catch and log netwoekserror
 
+//TODO: style result
 //TODO: design
 
 import { bus } from "../main";
@@ -91,7 +91,9 @@ export default {
       }
     }
   },
-  created() {}
+  created() {
+    this.getMeteorites(`$limit=15`);
+  }
 };
 </script>
 
