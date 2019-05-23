@@ -1,24 +1,30 @@
 <template>
-  <v-flex>
-    <v-form @submit="search" class="form flex">
-      <v-text-field
-        solo
-        append-icon="close"
-        v-model="input"
-        type="text"
-        placeholder="Enter name of location"
-        required
-        class="my-4"
-      ></v-text-field>
-      <v-btn flat block @click.prevent="search" class="my-4">
+  <v-layout column align-center>
+    <v-flex>
+      <v-form ref="form" @submit="search" class="form">
+        <v-text-field
+          solo
+          append-icon="close"
+          v-model="input"
+          type="text"
+          placeholder="Enter name of location"
+          required
+          class="my-4"
+        ></v-text-field>
+      </v-form>
+    </v-flex>
+    <v-flex>
+      <v-btn @click.prevent="search" class="pink">
         <v-icon>search</v-icon>
       </v-btn>
-    </v-form>
-  </v-flex>
+      <v-btn class="pink" @click="reset">
+        <v-icon>clear</v-icon>
+      </v-btn>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
-//TODO: make clear/reset function
 //TODO: handle edge cases
 
 //TODO: design
@@ -34,6 +40,10 @@ export default {
     };
   },
   methods: {
+    reset: function() {
+      this.$refs.form.reset();
+      this.getMeteorites(`$limit=15`);
+    },
     //method to capitalize each word in sentence
     capitalize: function(str) {
       return str
@@ -96,6 +106,5 @@ export default {
 <style scoped>
 .form {
   max-width: 400px;
-  display: flex;
 }
 </style>
