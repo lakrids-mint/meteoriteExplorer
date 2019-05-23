@@ -1,6 +1,10 @@
 <<template>
   <v-container>
+    
+
+ 
     <!-- Passing props -->
+    
     <Meteorite v-bind:meteoriteLandings="meteoriteLandings"></Meteorite>
   </v-container>
 </template>

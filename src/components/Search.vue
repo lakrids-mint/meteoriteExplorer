@@ -1,7 +1,7 @@
 <template>
   <v-layout column align-center>
     <v-flex>
-      <v-form ref="form" @submit="search" class="form">
+      <v-form ref="form" @submit.prevent="search" class="form">
         <v-text-field
           solo
           append-icon="close"
@@ -26,8 +26,11 @@
 
 <script>
 //TODO: handle edge cases
+//TODO: implement @input search
+//TODO: look up best practice for passing props/slots - read that article! and implement:)
+//TODO: make enter work!
 
-//TODO: design
+//TODO: make it look nice and interesting!
 
 import { bus } from "../main";
 export default {
@@ -62,9 +65,9 @@ export default {
 
       //populates local list
       this.meteoriteLandings = data;
-      //rather crude way to check for response
+      //rather crude way to check for response - also it (the else clause)doesn't work:(
       if (this.meteoriteLandings) {
-        //emits data to event bus component
+        //emits data to event bus component so result is updated every time this function is triggered
         bus.$emit("searchResult", this.meteoriteLandings);
         return data;
       } else {
@@ -77,8 +80,9 @@ export default {
     search: async function() {
       //check input for empty string
       if (!this.input) {
+        //push error message to error list
         this.errors.push("You must give somthing to get something:)");
-        //this.getMeteorites("$limit=15");
+        //emits error list
         bus.$emit("showErrors", this.errors);
       } else if (this.input) {
         //capitalize input
@@ -90,14 +94,14 @@ export default {
           //API call
           this.getMeteorites(`name=${searchTerm}`);
         } catch (error) {
-          this.errors.push(error);
-          console.log("error message from search component:", this.errors);
-          console.log(error.message);
+          // Pretty sure this doesn't work for some reason
+          this.errors.push(error.message);
         }
       }
     }
   },
   created() {
+    //loads first 15 results of data on creation
     this.getMeteorites(`$limit=15`);
   }
 };
