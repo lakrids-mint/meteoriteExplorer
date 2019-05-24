@@ -1,11 +1,10 @@
-<<template>
+<template>
   <v-container>
-    
-
- 
-    <!-- Passing props -->
-    
-    <Meteorite v-bind:meteoriteLandings="meteoriteLandings"></Meteorite>
+    <v-layout row wrap>
+      <v-flex xs12 sm6 md4 v-for="landing in meteoriteLandings" :key="landing.id">
+        <Meteorite :landing="landing" :key="landing.id"></Meteorite>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -43,5 +42,5 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 </style>

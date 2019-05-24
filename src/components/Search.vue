@@ -7,17 +7,17 @@
           append-icon="close"
           v-model="input"
           type="text"
-          placeholder="Enter name of location"
+          placeholder="Enter name"
           required
           class="my-4"
         ></v-text-field>
       </v-form>
     </v-flex>
     <v-flex>
-      <v-btn @click.prevent="search" class="pink">
+      <v-btn dark @click.prevent="search" class="pink">
         <v-icon>search</v-icon>
       </v-btn>
-      <v-btn class="pink" @click="reset">
+      <v-btn dark class="pink" @click="reset">
         <v-icon>clear</v-icon>
       </v-btn>
     </v-flex>
@@ -26,11 +26,11 @@
 
 <script>
 //TODO: handle edge cases
-//TODO: look up best practice for passing props/slots - read that article! and implement:)
+//TODO: implement dynamic search
+
 //TODO: style result
 
 //TODO: make it look nice and interesting!
-//TODO: implement @input search
 
 import { bus } from "../main";
 export default {
