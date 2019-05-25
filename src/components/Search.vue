@@ -10,14 +10,11 @@
           type="text"
           placeholder="Search by name"
           class="my-4"
+          append-outer-icon="search"
+          @click:append-outer="search"
           @input="dynamicSearch"
         ></v-text-field>
       </v-form>
-    </v-flex>
-    <v-flex>
-      <v-btn dark @click.prevent="search" class="pink">
-        <v-icon>search</v-icon>
-      </v-btn>
     </v-flex>
   </v-layout>
 </template>
