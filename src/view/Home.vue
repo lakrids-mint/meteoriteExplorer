@@ -6,13 +6,12 @@
         <h1 class="display-2 font-weight-thin ma-4">Meteorite Explorer</h1>
       </v-flex>
       <!-- Snackbar showing errors -->
-      <v-flex class="pa-4 white" v-if="error">
-        <p>{{error}}</p>
-        <v-spacer></v-spacer>
-        <v-btn>
+      <v-snackbar v-model="snackbar" color="pink" :timeout="5000" top>
+        <span>{{error}}</span>
+        <v-btn flat color="white" @click="snackbar=false">
           <v-icon>close</v-icon>
         </v-btn>
-      </v-flex>
+      </v-snackbar>
       <!-- Components -->
       <Search></Search>
       <Result></Result>
@@ -28,19 +27,27 @@ import { bus } from "../main";
 export default {
   data() {
     return {
-      error: ""
+      error: "",
+      snackbar: false
     };
   },
   components: {
     Search,
     Result
   },
-  methods: {},
+  methods: {
+    /*  close: function(){
+      //clears error
+      this.error = "";
+      //closes snackbar
+      this.snackbar = false;
+    } */
+  },
   created() {
     bus.$on("showErrors", error => {
       this.error = error;
+      this.snackbar = true;
     });
-    console.log("from home component:", this.errors);
   }
 };
 </script>

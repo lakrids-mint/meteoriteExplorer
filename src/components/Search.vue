@@ -29,6 +29,7 @@
 //TODO: handle edge cases
 //TODO: check reset requirements
 //TODO: check case sentisivity requirements (arabic city edge case)
+//TODO: like search query
 
 //TODO: make responsive
 //TODO: make it look nice and interesting!
