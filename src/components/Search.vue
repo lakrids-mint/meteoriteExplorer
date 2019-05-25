@@ -18,9 +18,10 @@
 </template>
 
 <script>
-//TODO: load state
+//TODO: load thinking bar
+//TODO: sort by name thing(maybe)
 //TODO: make responsive
-//TODO: make it look nice and interesting!
+//TODO: make it look nice and interesting(or at least add some colours)!
 
 import { bus } from "../main";
 

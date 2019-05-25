@@ -42,6 +42,8 @@
 </template>
 
 <script>
+/* This component just render the individual "rows" of data that it receives as props 
+  from the result component. Conditional rendering with ternary operators in case of missing data */
 export default {
   props: ["landing"]
 };

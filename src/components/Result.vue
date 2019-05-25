@@ -26,9 +26,8 @@ export default {
   },
   data() {
     return {
-      //Local list of meteorites & errors
-      meteoriteLandings: [],
-      error: ""
+      //Local list of meteorites
+      meteoriteLandings: []
     };
   },
   created() {
@@ -40,8 +39,7 @@ export default {
       }
       //Checks if result array is empty and emits error
       if (this.meteoriteLandings.length == 0) {
-        this.error = "No match was found";
-        bus.$emit("showErrors", this.error);
+        bus.$emit("showErrors", "Sorry, no match was found:/");
       }
     });
   }

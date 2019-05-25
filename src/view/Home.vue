@@ -35,15 +35,8 @@ export default {
     Search,
     Result
   },
-  methods: {
-    /*  close: function(){
-      //clears error
-      this.error = "";
-      //closes snackbar
-      this.snackbar = false;
-    } */
-  },
   created() {
+    //listens for errors and turns on the snackbar to display them
     bus.$on("showErrors", error => {
       this.error = error;
       this.snackbar = true;
