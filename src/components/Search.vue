@@ -5,6 +5,7 @@
         <v-text-field
           solo
           append-icon="close"
+          @click:append="reset"
           v-model.trim="input"
           type="text"
           placeholder="Search by name"
@@ -16,9 +17,6 @@
     <v-flex>
       <v-btn dark @click.prevent="search" class="pink">
         <v-icon>search</v-icon>
-      </v-btn>
-      <v-btn dark class="pink" @click="reset">
-        <v-icon>clear</v-icon>
       </v-btn>
     </v-flex>
   </v-layout>
@@ -76,6 +74,7 @@ export default {
           bus.$emit("showErrors", this.error);
         }
         return data;
+        console.log(data);
       } else {
         this.error = "Something went wrong:( ";
         bus.$emit("showErrors", this.error);
