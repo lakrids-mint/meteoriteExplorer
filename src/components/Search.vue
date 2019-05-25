@@ -22,8 +22,7 @@
 <script>
 //TODO: handle edge cases
 //TODO: check reset requirements
-//TODO: check case sentisivity requirements (arabic city edge case)
-//TODO: like search query
+//TODO: test if case sentisivity requirements (arabic city edge case)
 
 //TODO: make responsive
 //TODO: make it look nice and interesting!
@@ -79,12 +78,14 @@ export default {
       }
     },
     dynamicSearch: function() {
-      //capitalize input
-      const searchTerm = this.capitalize(this.input);
+      //search for a names that include the entered search term
       //like query: (`$where=name like '%25${this.input}%25'`)
-      this.getMeteorites(`$where=starts_with(name, '${searchTerm}')`);
-      //starts with
-      //`$where=starts_with(name, '%25${this.input}%25')`
+      this.getMeteorites(`$where=name like '%25${this.input}%25'`);
+      console.log(this.input);
+
+      // starts with search:
+      //const searchTerm = this.capitalize(this.input);
+      // this.getMeteorites(`$where=starts_with(name, '${searchTerm}')`);
     },
     //exact match
     search: function() {
