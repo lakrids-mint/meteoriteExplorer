@@ -5,8 +5,14 @@
         <Meteorite :landing="landing" :key="landing.id"></Meteorite>
       </v-flex>
     </v-layout>
+    <template>
+      <div class="text-xs-center">
+        <v-pagination v-model="page" :length="15" @next="next" @previous="previous"></v-pagination>
+      </div>
+    </template>
   </v-container>
 </template>
+ 
 
 <script>
 import Meteorite from "@/components/Meteorite";
@@ -20,10 +26,28 @@ export default {
     return {
       //Local list of meteorites & errors
       meteoriteLandings: [],
-      errors: []
+      error: "",
+      page: 1
     };
   },
-  methods: {},
+  methods: {
+    //pagination
+    next: function() {
+      console.log("next");
+      bus.$emit("next", 15);
+    },
+    previous: function() {
+      console.log("previous");
+    }
+  },
+  //look at this whwn sober!
+  computed: {
+    filteredSearch: function() {
+      return this.meteoriteLandings.filter(landing => {
+        return blog.name.match(this.input);
+      });
+    }
+  },
 
   created() {
     //listening for search events from search component
@@ -34,8 +58,8 @@ export default {
       }
       //Checks if result array is empty and emits error
       if (this.meteoriteLandings.length == 0) {
-        this.errors.push("No match was found");
-        bus.$emit("showErrors", this.errors);
+        this.error = "No match was found";
+        bus.$emit("showErrors", this.error);
       }
     });
   }

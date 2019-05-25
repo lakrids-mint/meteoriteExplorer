@@ -10,8 +10,10 @@
           <p>Year</p>
         </v-flex>
         <v-spacer></v-spacer>
+        <!-- Handling missing data -->
         <v-flex>
-          <p class="text-xs-right">{{landing.year.slice(0,4)}}</p>
+          <p class="text-xs-right" v-if="landing.year">{{landing.year.slice(0,4)}}</p>
+          <p v-else="!landing.year">Unknown</p>
         </v-flex>
       </v-layout>
     </v-flex>
@@ -22,9 +24,7 @@
           <p>Year</p>
         </v-flex>
         <v-spacer></v-spacer>
-        <v-flex>
-          <p class="text-xs-right">{{landing.year.slice(0,4)}}</p>
-        </v-flex>
+        <v-flex></v-flex>
       </v-layout>
     </v-flex>
   </v-card>

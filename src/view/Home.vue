@@ -4,10 +4,13 @@
       <v-flex>
         <h1 class="display-2 font-weight-thin ma-4">Meteorite Explorer</h1>
       </v-flex>
-      <v-flex v-if="errors">
-        <ul>
-          <li v-for="error in errors">{{error}}</li>
-        </ul>
+
+      <v-flex class="pa-4 white" v-if="error">
+        <p>{{error}}</p>
+        <v-spacer></v-spacer>
+        <v-btn>
+          <v-icon>close</v-icon>
+        </v-btn>
       </v-flex>
 
       <Search></Search>
@@ -24,7 +27,7 @@ import { bus } from "../main";
 export default {
   data() {
     return {
-      errors: []
+      error: ""
     };
   },
   components: {
@@ -33,18 +36,13 @@ export default {
   },
   methods: {},
   created() {
-    bus.$on("showErrors", errorList => {
-      errorList.forEach(error => {
-        this.errors.push(error);
-      });
-      console.log("from home component:", this.errors);
+    bus.$on("showErrors", error => {
+      this.error += error;
     });
+    console.log("from home component:", this.errors);
   }
 };
 </script>
 
-<style>
-ul {
-  list-style: none;
-}
+<style scoped>
 </style>

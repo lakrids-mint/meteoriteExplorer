@@ -5,7 +5,7 @@
         <v-text-field
           solo
           append-icon="close"
-          v-model="input"
+          v-model.trim="input"
           type="text"
           placeholder="Enter name"
           required
@@ -38,14 +38,16 @@ export default {
     return {
       input: "".trim(),
       meteoriteLandings: [],
-      errors: [],
+      error: "",
       api: "https://data.nasa.gov/resource/gh4g-9sfh.json"
     };
   },
+  //moves to reusult
+  computed: {},
   methods: {
     reset: function() {
       this.$refs.form.reset();
-      this.getMeteorites(`$limit=15`);
+      this.getMeteorites("$limit=15&$offset=0");
     },
     //method to capitalize each word in sentence
     capitalize: function(str) {
@@ -71,9 +73,8 @@ export default {
         bus.$emit("searchResult", this.meteoriteLandings);
         return data;
       } else {
-        this.errors.push("Something went wrong:( ");
-        console.log("something went wrong", this.errors);
-        bus.$emit("showErrors", this.errors);
+        this.error = "Something went wrong:( ";
+        bus.$emit("showErrors", this.error);
       }
     },
 
@@ -81,13 +82,12 @@ export default {
       //check input for empty string
       if (!this.input) {
         //push error message to error list
-        this.errors.push("You must give somthing to get something:)");
+        this.error = "You must give somthing to get something:)";
         //emits error list
-        bus.$emit("showErrors", this.errors);
+        bus.$emit("showErrors", this.error);
       } else if (this.input) {
         //capitalize input
         const searchTerm = this.capitalize(this.input);
-        console.log(searchTerm);
 
         //Try/catch for nice error handling
         try {
@@ -95,14 +95,18 @@ export default {
           this.getMeteorites(`name=${searchTerm}`);
         } catch (error) {
           // Pretty sure this doesn't work for some reason
-          this.errors.push(error.message);
+          this.error = error.message;
         }
       }
     }
   },
   created() {
     //loads first 15 results of data on creation
-    this.getMeteorites(`$limit=15`);
+    this.getMeteorites("$limit=15&$offset=0");
+    bus.$on("next", () => {
+      //TODO: make number input dynamic
+      this.getMeteorites("$limit=15&$offset=15");
+    });
   }
 };
 </script>
