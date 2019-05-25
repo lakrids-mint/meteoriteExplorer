@@ -7,9 +7,9 @@
           append-icon="close"
           v-model.trim="input"
           type="text"
-          placeholder="Enter name"
-          required
+          placeholder="Search by name"
           class="my-4"
+          @input="dynamicSearch"
         ></v-text-field>
       </v-form>
     </v-flex>
@@ -78,12 +78,19 @@ export default {
         bus.$emit("showErrors", this.error);
       }
     },
-
-    search: async function() {
+    dynamicSearch: function() {
+      //capitalize input
+      const searchTerm = this.capitalize(this.input);
+      //like query: (`$where=name like '%25${this.input}%25'`)
+      this.getMeteorites(`$where=starts_with(name, '${searchTerm}')`);
+      //starts with
+      //`$where=starts_with(name, '%25${this.input}%25')`
+    },
+    search: function() {
       //check input for empty string
       if (!this.input) {
         //push error message to error list
-        this.error = "You must give somthing to get something:)";
+        this.error = "Please input something before you click search:)";
         //emits error list
         bus.$emit("showErrors", this.error);
       } else if (this.input) {
