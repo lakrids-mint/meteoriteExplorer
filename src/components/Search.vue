@@ -28,11 +28,13 @@
 //TODO: handle edge cases
 //TODO: check reset requirements
 //TODO: check case sentisivity requirements (arabic city edge case)
+//TODO: like search query
 
 //TODO: make responsive
 //TODO: make it look nice and interesting!
 
 import { bus } from "../main";
+import { constants } from "crypto";
 export default {
   data() {
     return {
@@ -67,6 +69,12 @@ export default {
       if (this.meteoriteLandings) {
         //if data emits it to event bus component so result is updated every time this function is triggered
         bus.$emit("searchResult", this.meteoriteLandings);
+        //checks for response status and throws error
+        if (!response.ok) {
+          throw Error(response.statusText);
+          this.error = response.statusText;
+          bus.$emit("showErrors", this.error);
+        }
         return data;
       } else {
         this.error = "Something went wrong:( ";
