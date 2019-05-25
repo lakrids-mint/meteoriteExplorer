@@ -1,13 +1,21 @@
 <template>
   <v-container>
-    <v-layout row wrap>
-      <v-flex xs12 sm6 md4 v-for="landing in meteoriteLandings" :key="landing.id">
-        <Meteorite :landing="landing" :key="landing.id"></Meteorite>
-      </v-flex>
+    <!-- This is the sorting bar on top of the results -->
+    <v-layout row>
+      <v-btn small flat color="grey">
+        <v-icon left small>arrow_downward</v-icon>
+        <span class="caption text--lowecase">Sort by name</span>
+      </v-btn>
     </v-layout>
+    <!-- Iterating over results -->
+
+    <v-flex xs12 v-for="landing in meteoriteLandings" :key="landing.id">
+      <Meteorite :landing="landing" :key="landing.id"></Meteorite>
+    </v-flex>
+    <!-- Pagination -->
     <template>
-      <div class="text-xs-center">
-        <v-pagination v-model="page" :length="15" @next="next" @previous="previous"></v-pagination>
+      <div class="text-xs-center mt-4">
+        <v-pagination v-model="page" @next="next" @previous="previous"></v-pagination>
       </div>
     </template>
   </v-container>

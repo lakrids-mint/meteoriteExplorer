@@ -27,16 +27,17 @@
 <script>
 //TODO: handle edge cases
 //TODO: implement dynamic search
+//TODO: check reset requirements
+//TODO: check load on
 
-//TODO: style result
-
+//TODO: make responsive
 //TODO: make it look nice and interesting!
 
 import { bus } from "../main";
 export default {
   data() {
     return {
-      input: "".trim(),
+      input: "",
       meteoriteLandings: [],
       error: "",
       api: "https://data.nasa.gov/resource/gh4g-9sfh.json"

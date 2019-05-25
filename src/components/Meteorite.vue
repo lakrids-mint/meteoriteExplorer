@@ -1,32 +1,43 @@
 <template>
-  <v-card class="ma-2 pa-2">
-    <v-card-title>
-      <h4 class="text-xs-center">{{ landing.name }}</h4>
-    </v-card-title>
-    <v-divider></v-divider>
-    <v-flex>
-      <v-layout align-content-space-between>
-        <v-flex>
-          <p>Year</p>
-        </v-flex>
-        <v-spacer></v-spacer>
-        <!-- Handling missing data -->
-        <v-flex>
-          <p class="text-xs-right" v-if="landing.year">{{landing.year.slice(0,4)}}</p>
-          <p v-else="!landing.year">Unknown</p>
-        </v-flex>
-      </v-layout>
-    </v-flex>
-
-    <v-flex>
-      <v-layout align-content-space-between>
-        <v-flex>
-          <p>Year</p>
-        </v-flex>
-        <v-spacer></v-spacer>
-        <v-flex></v-flex>
-      </v-layout>
-    </v-flex>
+  <v-card flat class="pa-2 mt-1">
+    <v-layout row>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Name</div>
+        <div>{{landing.name? landing.name: "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Id</div>
+        <div>{{landing.id? landing.id: "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Nametype</div>
+        <div>{{landing.nametype? landing.nametype: "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Rec Class</div>
+        <div>{{landing.recclass? landing.recclass: "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Mass (g)</div>
+        <div>{{landing.mass? landing.mass: "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Fall</div>
+        <div>{{landing.fall? landing.fall: "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Year</div>
+        <div>{{landing.year? landing.year.slice(0,4): "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Lattitude</div>
+        <div>{{landing.reclat? landing.reclat: "Unknown"}}</div>
+      </v-flex>
+      <v-flex xs12 md6>
+        <div class="caption grey--text">Longitude</div>
+        <div>{{landing.reclong? landing.reclong: "Unknown"}}</div>
+      </v-flex>
+    </v-layout>
   </v-card>
 </template>
 
