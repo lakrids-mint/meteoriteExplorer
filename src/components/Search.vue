@@ -25,10 +25,10 @@
 </template>
 
 <script>
+//TODO: fix snackbar
 //TODO: handle edge cases
-//TODO: implement dynamic search
 //TODO: check reset requirements
-//TODO: check load on
+//TODO: check case sentisivity requirements (arabic city edge case)
 
 //TODO: make responsive
 //TODO: make it look nice and interesting!
@@ -43,8 +43,6 @@ export default {
       api: "https://data.nasa.gov/resource/gh4g-9sfh.json"
     };
   },
-  //moves to reusult
-  computed: {},
   methods: {
     reset: function() {
       this.$refs.form.reset();
@@ -65,17 +63,16 @@ export default {
       //API call
       const response = await fetch(`${this.api}?${query}`);
       const data = await response.json();
-
       //populates local list
       this.meteoriteLandings = data;
-      //rather crude way to check for response - also it (the else clause)doesn't work:(
       if (this.meteoriteLandings) {
-        //emits data to event bus component so result is updated every time this function is triggered
+        //if data emits it to event bus component so result is updated every time this function is triggered
         bus.$emit("searchResult", this.meteoriteLandings);
         return data;
       } else {
         this.error = "Something went wrong:( ";
         bus.$emit("showErrors", this.error);
+        return this.error;
       }
     },
     dynamicSearch: function() {
@@ -86,23 +83,22 @@ export default {
       //starts with
       //`$where=starts_with(name, '%25${this.input}%25')`
     },
+    //exact match
     search: function() {
       //check input for empty string
       if (!this.input) {
-        //push error message to error list
+        //checks for no input
         this.error = "Please input something before you click search:)";
         //emits error list
         bus.$emit("showErrors", this.error);
       } else if (this.input) {
         //capitalize input
         const searchTerm = this.capitalize(this.input);
-
-        //Try/catch for nice error handling
         try {
-          //API call
+          //API call with exact match query
           this.getMeteorites(`name=${searchTerm}`);
         } catch (error) {
-          // Pretty sure this doesn't work for some reason
+          // Pretty sure this doesn't work for some reason:(
           this.error = error.message;
         }
       }
@@ -111,10 +107,6 @@ export default {
   created() {
     //loads first 15 results of data on creation
     this.getMeteorites("$limit=15&$offset=0");
-    bus.$on("next", () => {
-      //TODO: make number input dynamic
-      this.getMeteorites("$limit=15&$offset=15");
-    });
   }
 };
 </script>

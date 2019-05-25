@@ -42,15 +42,10 @@
 </template>
 
 <script>
-//TODO: style each entry
 export default {
   props: ["landing"]
 };
 </script>
 
 <style scoped>
-.row {
-  display: flex;
-  align-content: space-between;
-}
 </style>

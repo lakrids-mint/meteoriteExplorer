@@ -8,16 +8,10 @@
       </v-btn>
     </v-layout>
     <!-- Iterating over results -->
-
     <v-flex xs12 v-for="landing in meteoriteLandings" :key="landing.id">
+      <!-- passing down props to meteorite component -->
       <Meteorite :landing="landing" :key="landing.id"></Meteorite>
     </v-flex>
-    <!-- Pagination -->
-    <template>
-      <div class="text-xs-center mt-4">
-        <v-pagination v-model="page" @next="next" @previous="previous"></v-pagination>
-      </div>
-    </template>
   </v-container>
 </template>
  
@@ -34,29 +28,9 @@ export default {
     return {
       //Local list of meteorites & errors
       meteoriteLandings: [],
-      error: "",
-      page: 1
+      error: ""
     };
   },
-  methods: {
-    //pagination
-    next: function() {
-      console.log("next");
-      bus.$emit("next", 15);
-    },
-    previous: function() {
-      console.log("previous");
-    }
-  },
-  //look at this whwn sober!
-  computed: {
-    filteredSearch: function() {
-      return this.meteoriteLandings.filter(landing => {
-        return blog.name.match(this.input);
-      });
-    }
-  },
-
   created() {
     //listening for search events from search component
     bus.$on("searchResult", result => {
