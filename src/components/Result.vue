@@ -1,23 +1,25 @@
 <template>
   <v-container>
-    <!-- This is the sorting bar on top of the results -->
+    <!-- This is the sorting bar on top of the results plus pagination -->
     <v-layout row>
       <v-btn small flat color="grey">
         <v-icon left small>arrow_downward</v-icon>
         <span class="caption text--lowecase">Sort by name</span>
       </v-btn>
+      <!--   <v-btn small flat color="grey" @click="previous">
+        <v-icon left large>arrow_left</v-icon>
+        <span class="caption text--lowecase"></span>
+      </v-btn>
+      <v-btn small flat color="grey" @click="next">
+        <v-icon left large>arrow_right</v-icon>
+        <span class="caption text--lowecase"></span>
+      </v-btn>-->
     </v-layout>
     <!-- Iterating over results -->
 
     <v-flex xs12 v-for="landing in meteoriteLandings" :key="landing.id">
       <Meteorite :landing="landing" :key="landing.id"></Meteorite>
     </v-flex>
-    <!-- Pagination -->
-    <template>
-      <div class="text-xs-center mt-4">
-        <v-pagination v-model="page" @next="next" @previous="previous"></v-pagination>
-      </div>
-    </template>
   </v-container>
 </template>
  
@@ -34,27 +36,26 @@ export default {
     return {
       //Local list of meteorites & errors
       meteoriteLandings: [],
-      error: "",
-      page: 1
+      error: ""
+      // offset: 0
     };
   },
   methods: {
     //pagination
-    next: function() {
-      console.log("next");
-      bus.$emit("next", 15);
+    /*    next: function() {
+      this.offset += 15;
+      bus.$emit("next", this.offset);
+      console.log(this.offset);
     },
     previous: function() {
-      console.log("previous");
-    }
-  },
-  //look at this whwn sober!
-  computed: {
-    filteredSearch: function() {
-      return this.meteoriteLandings.filter(landing => {
-        return blog.name.match(this.input);
-      });
-    }
+      if (this.offset <= 0) {
+        this.offset = 0;
+      } else {
+        this.offset -= 15;
+        bus.$emit("previous", this.offset);
+        console.log(this.offset);
+      }
+    } */
   },
 
   created() {

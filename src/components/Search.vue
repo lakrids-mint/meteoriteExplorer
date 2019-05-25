@@ -26,11 +26,20 @@
 
 <script>
 //TODO: handle edge cases
-//TODO: implement dynamic search
+//What happens if the API request takes too long?
+//What if the API returns an error?
+// What if the user submits an empty string?
+// What if the API returns 0 results?
+//What if the query returns no matching results?
+//TODO: includes search
+//TODO: make search case independent
+//TODO: pagination
 //TODO: check reset requirements
-//TODO: check load on
+//TODO: clean up code!
+//TODO: deploy
 
 //TODO: make responsive
+//TODO:When the user begins typing search terms display a dropdown with the last 10 search terms.
 //TODO: make it look nice and interesting!
 
 import { bus } from "../main";
@@ -41,6 +50,7 @@ export default {
       meteoriteLandings: [],
       error: "",
       api: "https://data.nasa.gov/resource/gh4g-9sfh.json"
+      //     offset: 0
     };
   },
   //moves to reusult
@@ -111,10 +121,18 @@ export default {
   created() {
     //loads first 15 results of data on creation
     this.getMeteorites("$limit=15&$offset=0");
-    bus.$on("next", () => {
-      //TODO: make number input dynamic
-      this.getMeteorites("$limit=15&$offset=15");
-    });
+
+    //pagination
+    //PREVIOUS
+    /*  bus.$on("previous", offset => {
+      this.offset = offset;
+      this.getMeteorites(`$limit=15&$offset=${this.offset}`);
+    }); */
+    //NEXT
+    /*   bus.$on("next", offset => {
+      this.offset = offset;
+      this.getMeteorites(`$limit=15&$offset=${this.offset}`);
+    }); */
   }
 };
 </script>
