@@ -10,9 +10,7 @@
           type="text"
           placeholder="Search by name"
           class="my-4"
-          append-outer-icon="search"
-          @click:append-outer="search"
-          @input="dynamicSearch"
+          @input="search"
         ></v-text-field>
       </v-form>
     </v-flex>
@@ -20,96 +18,84 @@
 </template>
 
 <script>
-//TODO: handle edge cases
-//TODO: check reset requirements
-//TODO: test if case sentisivity requirements (arabic city edge case)
-
+//TODO: load state
 //TODO: make responsive
 //TODO: make it look nice and interesting!
 
 import { bus } from "../main";
-import { constants } from "crypto";
+
 export default {
   data() {
     return {
       input: "",
       meteoriteLandings: [],
-      error: "",
       api: "https://data.nasa.gov/resource/gh4g-9sfh.json"
     };
   },
   methods: {
-    reset: function() {
-      this.$refs.form.reset();
-      this.getMeteorites("$limit=15&$offset=0");
-    },
-    //method to capitalize each word in sentence
-    capitalize: function(str) {
-      return str
-        .toLowerCase()
-        .split(" ")
-        .map(word => {
-          return word.charAt(0).toUpperCase() + word.slice(1);
-        })
-        .join(" ");
-    },
-    // get data method
+    /* This is the function that makes the API call using fetch() and can be called with a query argument. 
+       Remember that it returns a promise and fetch only throws errors in case of network error
+       Using async and await, but haven't quite got a handle on error handling best practice yet.
+       The data is saved locally in a list(is this necessary?), that gets emitted every time it fires
+       
+    */
     getMeteorites: async function(query) {
       //API call
       const response = await fetch(`${this.api}?${query}`);
       const data = await response.json();
+      //checks for response status and throws error
+      if (!response.ok) {
+        bus.$emit("showErrors", response.statusText);
+        throw Error(response.statusText);
+      }
       //populates local list
       this.meteoriteLandings = data;
+      //check for empty list before emit
       if (this.meteoriteLandings) {
-        //if data emits it to event bus component so result is updated every time this function is triggered
         bus.$emit("searchResult", this.meteoriteLandings);
-        //checks for response status and throws error
-        if (!response.ok) {
-          throw Error(response.statusText);
-          this.error = response.statusText;
-          bus.$emit("showErrors", this.error);
-        }
         return data;
-        console.log(data);
-      } else {
-        this.error = "Something went wrong:( ";
-        bus.$emit("showErrors", this.error);
-        return this.error;
       }
     },
-    dynamicSearch: function() {
-      //search for a names that include the entered search term
-      //like query: (`$where=name like '%25${this.input}%25'`)
-      this.getMeteorites(`$where=name like '%25${this.input}%25'`);
-      console.log(this.input);
-
-      // starts with search:
-      //const searchTerm = this.capitalize(this.input);
-      // this.getMeteorites(`$where=starts_with(name, '${searchTerm}')`);
+    //Name says it all:)
+    reset: function() {
+      this.$refs.form.reset();
+      this.getMeteorites("$limit=15&$offset=0");
     },
-    //exact match
+    /* The search function calls the getData function with a specific query
+      It is triggered whenever the user inputs something in the search bar @input
+      I removed the search button to avoid confusion.
+       */
     search: function() {
       //check input for empty string
       if (!this.input) {
-        //checks for no input
-        this.error = "Please input something before you click search:)";
-        //emits error list
-        bus.$emit("showErrors", this.error);
+        //as per requirement an empty input field will reload the default API call
+        this.getMeteorites("$limit=15&$offset=0");
+        //emits error
+        bus.$emit(
+          "showErrors",
+          "Default data loaded! Please input specific search term:)"
+        );
       } else if (this.input) {
-        //capitalize input
-        const searchTerm = this.capitalize(this.input);
         try {
-          //API call with exact match query
-          this.getMeteorites(`name=${searchTerm}`);
+          /* Because my first solution which lower cased and capitalized user input didn't
+          work in the test case of "al-Ghanim" (deep sigh!) I went with this instead
+          https://dev.socrata.com/docs/functions/lower.html. NB:it's important that the
+          user input is still made lowercase(so don't change that, future me!) The
+           $order query seems unnecessary, but I might be missing something, so I'm 
+           keeping it for now.  
+          */
+          this.getMeteorites(
+            `$order=name&$where=lower(name)like lower('%25${this.input}%25')`
+          );
         } catch (error) {
           // Pretty sure this doesn't work for some reason:(
-          this.error = error.message;
+          bus.$emit("showErrors", error.message);
         }
       }
     }
   },
   created() {
-    //loads first 15 results of data on creation
+    //loads first 15 results of data set on creation
     this.getMeteorites("$limit=15&$offset=0");
   }
 };
