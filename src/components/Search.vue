@@ -25,7 +25,6 @@
 </template>
 
 <script>
-//TODO: fix snackbar
 //TODO: handle edge cases
 //TODO: check reset requirements
 //TODO: check case sentisivity requirements (arabic city edge case)
