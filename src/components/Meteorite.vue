@@ -1,31 +1,31 @@
 <template>
-  <v-card flat class="pa-2 mt-1">
+  <v-card flat :class="`pa-2 mt-1 ${landing.fall}`">
     <v-layout row>
       <v-flex xs12 md6>
         <div class="caption grey--text">Name</div>
         <div>{{landing.name? landing.name: "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Id</div>
         <div>{{landing.id? landing.id: "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Nametype</div>
         <div>{{landing.nametype? landing.nametype: "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Rec Class</div>
         <div>{{landing.recclass? landing.recclass: "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Mass (g)</div>
         <div>{{landing.mass? landing.mass: "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Fall</div>
         <div>{{landing.fall? landing.fall: "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Year</div>
         <div>{{landing.year? landing.year.slice(0,4): "Unknown"}}</div>
       </v-flex>
@@ -50,4 +50,10 @@ export default {
 </script>
 
 <style scoped>
+.Fell {
+  border-left: 5px solid pink;
+}
+.Found {
+  border-left: 5px solid rgb(109, 44, 44);
+}
 </style>

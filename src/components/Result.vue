@@ -1,12 +1,5 @@
 <template>
   <v-container>
-    <!-- This is the sorting bar on top of the results -->
-    <v-layout row>
-      <v-btn small flat color="grey">
-        <v-icon left small>arrow_downward</v-icon>
-        <span class="caption text--lowecase">Sort by name</span>
-      </v-btn>
-    </v-layout>
     <!-- Iterating over results -->
     <v-flex xs12 v-for="landing in meteoriteLandings" :key="landing.id">
       <!-- passing down props to meteorite component -->

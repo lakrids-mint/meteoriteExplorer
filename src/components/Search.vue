@@ -19,8 +19,11 @@
 
 <script>
 //TODO: load thinking bar
+//TODO: handle test case: adgagaga11344!#!$!$
+//TODO: handle promise rejection
 //TODO: sort by name thing(maybe)
 //TODO: make responsive
+//TODO: save ten latest input
 //TODO: make it look nice and interesting(or at least add some colours)!
 
 import { bus } from "../main";
@@ -81,8 +84,9 @@ export default {
           /* Because my first solution which lower cased and capitalized user input didn't
           work in the test case of "al-Ghanim" (deep sigh!) I went with this instead
           https://dev.socrata.com/docs/functions/lower.html. NB:it's important that the
-          user input is still made lowercase(so don't change that, future me!) The
-           $order query seems unnecessary, but I might be missing something, so I'm 
+          user input is still made lowercase(so don't change that, future me!) 
+          See this: https://alvinalexander.com/sql/sql-select-case-insensitive-query-queries-upper-lower
+          The $order query seems unnecessary, but I might be missing something, so I'm 
            keeping it for now.  
           */
           this.getMeteorites(
