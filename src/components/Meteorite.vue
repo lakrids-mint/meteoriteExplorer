@@ -1,5 +1,5 @@
 <template>
-  <v-card flat :class="`pa-2 mt-1 ${landing.fall}`">
+  <v-card flat :class="`pa-2 mt-1 ${landing.fall.toLowerCase()}`">
     <v-layout row>
       <v-flex xs12 md6>
         <div class="caption grey--text">Name</div>
@@ -50,10 +50,10 @@ export default {
 </script>
 
 <style scoped>
-.Fell {
+.fell {
   border-left: 5px solid #ffca28;
 }
-.Found {
+.found {
   border-left: 5px solid #b71c1c;
 }
 </style>

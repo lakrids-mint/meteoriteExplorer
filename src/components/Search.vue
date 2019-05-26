@@ -5,7 +5,7 @@
         <v-text-field
           solo
           append-icon="close"
-          appens-outer-icon="search"
+          append-outer-icon="search"
           @click:append-outer="search"
           @click:append="reset"
           v-model.trim="input"
@@ -23,7 +23,7 @@
 //TODO: load thinking bar
 //TODO: handle test case: adgagaga11344!#!$!$
 //TODO: handle promise rejection
-//TODO: sort by name thing(maybe)
+
 //TODO: make responsive
 //TODO: save ten latest input
 //TODO: make it look nice and interesting(or at least add some colours)!
