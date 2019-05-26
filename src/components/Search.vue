@@ -72,7 +72,7 @@ export default {
     //Name says it all:)
     reset: function() {
       this.$refs.form.reset();
-      this.getMeteorites("$limit=15&$offset=0");
+      bus.$emit("showErrors", "Input field cleared:)");
     },
     /* The search function calls the getData function with a specific query
       It is triggered whenever the user inputs something in the search bar @input
