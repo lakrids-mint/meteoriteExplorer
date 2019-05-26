@@ -51,15 +51,22 @@ export default {
       const data = await response.json();
       //checks for response status and throws error
       if (!response.ok) {
-        bus.$emit("showErrors", response.statusText);
-        throw Error(response.statusText);
-      }
-      //populates local list
-      this.meteoriteLandings = data;
-      //check for empty list before emit
-      if (this.meteoriteLandings) {
-        bus.$emit("searchResult", this.meteoriteLandings);
-        return data;
+        bus.$emit(
+          "showErrors",
+          `Something went wrong with your request - ${response.message}`
+        );
+        return Promise.reject({
+          status: response.status,
+          statusText: response.statusText
+        });
+      } else if (response.ok) {
+        //populates local list
+        this.meteoriteLandings = data;
+        //check for empty list before emit
+        if (this.meteoriteLandings) {
+          bus.$emit("searchResult", this.meteoriteLandings);
+          return data;
+        }
       }
     },
     //Name says it all:)
@@ -93,7 +100,12 @@ export default {
           */
           this.getMeteorites(
             `$order=name&$where=lower(name)like lower('%25${this.input}%25')`
-          );
+          ).catch(e => {
+            bus.$emit(
+              "showErrors",
+              `Yikes! Something went wrong: ${e.statusText}`
+            );
+          });
         } catch (error) {
           // Pretty sure this doesn't work for some reason:(
           bus.$emit("showErrors", error.message);
