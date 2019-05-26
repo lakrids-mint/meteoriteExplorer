@@ -51,9 +51,9 @@ export default {
 
 <style scoped>
 .Fell {
-  border-left: 5px solid pink;
+  border-left: 5px solid #ffca28;
 }
 .Found {
-  border-left: 5px solid rgb(109, 44, 44);
+  border-left: 5px solid #b71c1c;
 }
 </style>

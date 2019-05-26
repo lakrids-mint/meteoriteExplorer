@@ -5,6 +5,8 @@
         <v-text-field
           solo
           append-icon="close"
+          appens-outer-icon="search"
+          @click:append-outer="search"
           @click:append="reset"
           v-model.trim="input"
           type="text"
