@@ -4,6 +4,7 @@
       <v-form ref="form" @submit.prevent="search" class="form">
         <v-text-field
           solo
+          flat
           append-icon="close"
           append-outer-icon="search"
           @click:append-outer="search"
@@ -21,8 +22,6 @@
 
 <script>
 //TODO: load thinking bar
-//TODO: handle test case: adgagaga11344!#!$!$
-//TODO: handle promise rejection
 
 //TODO: make responsive
 //TODO: save ten latest input

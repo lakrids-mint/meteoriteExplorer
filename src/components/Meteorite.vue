@@ -1,6 +1,7 @@
 <template>
   <v-card flat :class="`pa-2 mt-1 ${landing.fall.toLowerCase()}`">
-    <v-layout row>
+    <!-- Responsiveness - adding the wrap class on sm and down screens -->
+    <v-layout :class="`row ${$vuetify.breakpoint.xs? 'wrap': '' }`">
       <v-flex xs12 md6>
         <div class="caption grey--text">Name</div>
         <div>{{landing.name? landing.name: "Unknown"}}</div>
@@ -29,11 +30,11 @@
         <div class="caption grey--text">Year</div>
         <div>{{landing.year? landing.year.slice(0,4): "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Lattitude</div>
         <div>{{landing.reclat? landing.reclat: "Unknown"}}</div>
       </v-flex>
-      <v-flex xs12 md6>
+      <v-flex xs6 sm4 md2>
         <div class="caption grey--text">Longitude</div>
         <div>{{landing.reclong? landing.reclong: "Unknown"}}</div>
       </v-flex>
