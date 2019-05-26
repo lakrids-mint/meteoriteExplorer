@@ -1,5 +1,11 @@
 <template>
   <v-container>
+    <v-snackbar v-model="snackbar" color="success" :timeout="5000" bottom>
+      <span>{{meteoriteLandings.length}} landings matches your query</span>
+      <v-btn flat color="white" @click="snackbar=false">
+        <v-icon>close</v-icon>
+      </v-btn>
+    </v-snackbar>
     <!-- Iterating over results -->
     <v-flex xs12 v-for="landing in meteoriteLandings" :key="landing.id">
       <!-- passing down props to meteorite component -->
@@ -20,7 +26,8 @@ export default {
   data() {
     return {
       //Local list of meteorites
-      meteoriteLandings: []
+      meteoriteLandings: [],
+      snackbar: false
     };
   },
   created() {
@@ -29,6 +36,7 @@ export default {
       //loads result into local array
       if (result) {
         this.meteoriteLandings = result;
+        this.snackbar = true;
       }
       //Checks if result array is empty and emits error
       if (this.meteoriteLandings.length == 0) {

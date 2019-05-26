@@ -6,7 +6,7 @@
         <h1 class="display-2 font-weight-thin ma-4">Meteorite Explorer</h1>
       </v-flex>
       <!-- Snackbar showing errors -->
-      <v-snackbar v-model="snackbar" color="pink" :timeout="5000" top>
+      <v-snackbar v-model="snackbar" color="error" :timeout="5000" top>
         <span>{{error}}</span>
         <v-btn flat color="white" @click="snackbar=false">
           <v-icon>close</v-icon>

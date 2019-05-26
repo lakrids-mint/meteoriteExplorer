@@ -1,6 +1,7 @@
 <template>
+  <!-- A touch of colour! Toggle class depending on found/fell conditon -->
   <v-card flat :class="`pa-2 mt-1 ${landing.fall.toLowerCase()}`">
-    <!-- Responsiveness - adding the wrap class on sm and down screens -->
+    <!-- Responsiveness - conditionally adding the wrap class on sm and down screens -->
     <v-layout :class="`row ${$vuetify.breakpoint.xs? 'wrap': '' }`">
       <v-flex xs12 md6>
         <div class="caption grey--text">Name</div>

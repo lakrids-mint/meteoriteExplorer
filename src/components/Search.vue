@@ -5,6 +5,7 @@
         <v-text-field
           solo
           flat
+          box
           append-icon="close"
           append-outer-icon="search"
           @click:append-outer="search"
@@ -12,21 +13,16 @@
           v-model.trim="input"
           type="text"
           placeholder="Search by name"
-          class="my-4"
+          class="input-style"
           @input="search"
         ></v-text-field>
       </v-form>
     </v-flex>
   </v-layout>
 </template>
-
+  
+      
 <script>
-//TODO: load thinking bar
-
-//TODO: make responsive
-//TODO: save ten latest input
-//TODO: make it look nice and interesting(or at least add some colours)!
-
 import { bus } from "../main";
 
 export default {
@@ -64,6 +60,7 @@ export default {
         //check for empty list before emit
         if (this.meteoriteLandings) {
           bus.$emit("searchResult", this.meteoriteLandings);
+          this.loading = false;
           return data;
         }
       }
@@ -71,29 +68,23 @@ export default {
     //Name says it all:)
     reset: function() {
       this.$refs.form.reset();
-      bus.$emit("showErrors", "Input field cleared:)");
     },
     /* The search function calls the getData function with a specific query
       It is triggered whenever the user inputs something in the search bar @input
-      I removed the search button to avoid confusion.
        */
     search: function() {
+      this.loading = true;
       //check input for empty string
       if (!this.input) {
         //as per requirement an empty input field will reload the default API call
         this.getMeteorites("$limit=15&$offset=0");
         //emits error
-        bus.$emit(
-          "showErrors",
-          "Default data loaded! Please input specific search term:)"
-        );
+        bus.$emit("showErrors", "Default data loaded:)");
       } else if (this.input) {
         try {
           /* Because my first solution which lower cased and capitalized user input didn't
           work in the test case of "al-Ghanim" (deep sigh!) I went with this instead
-          https://dev.socrata.com/docs/functions/lower.html. NB:it's important that the
-          user input is still made lowercase(so don't change that, future me!) 
-          See this: https://alvinalexander.com/sql/sql-select-case-insensitive-query-queries-upper-lower
+          https://dev.socrata.com/docs/functions/lower.html. 
           The $order query seems unnecessary, but I might be missing something, so I'm 
            keeping it for now.  
           */
