@@ -6,6 +6,7 @@
           solo
           flat
           box
+          :rules="[rules.validSigns]"
           append-icon="close"
           append-outer-icon="search"
           @click:append-outer="search"
@@ -29,8 +30,16 @@ export default {
   data() {
     return {
       input: "",
-      meteoriteLandings: [],
-      api: "https://data.nasa.gov/resource/gh4g-9sfh.json"
+      api: "https://data.nasa.gov/resource/gh4g-9sfh.json",
+      //some basic input validation :)
+      rules: {
+        validSigns: value => {
+          const pattern = /^[a-zA-Z0-9 ]*$/;
+          return (
+            pattern.test(value) || "Characters allowed are a-z and numbers 0-9"
+          );
+        }
+      }
     };
   },
   methods: {
