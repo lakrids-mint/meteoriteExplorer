@@ -34,17 +34,16 @@ export default {
     };
   },
   methods: {
-    /* This is the function that makes the API call using fetch() and can be called with a query argument. 
-       Remember that it returns a promise and fetch only throws errors in case of network error
+    /* This is the function that makes the API call using fetch() and takes a query parameter. 
        Using async and await, but haven't quite got a handle on error handling best practice yet.
-       The data is saved locally in a list(is this necessary?), that gets emitted every time it fires
-       
+       The data is saved locally in a list(is this necessary?), that gets emitted to the 
+       result component (well technically it's emitted to the (event)bus component) every time it fires.
     */
     getMeteorites: async function(query) {
-      //API call
+      //API call using async/await
       const response = await fetch(`${this.api}?${query}`);
       const data = await response.json();
-      //checks for response status and throws error
+      //checks for response status and returns a promise reject with info
       if (!response.ok) {
         bus.$emit(
           "showErrors",
@@ -60,7 +59,6 @@ export default {
         //check for empty list before emit
         if (this.meteoriteLandings) {
           bus.$emit("searchResult", this.meteoriteLandings);
-          this.loading = false;
           return data;
         }
       }
@@ -70,15 +68,14 @@ export default {
       this.$refs.form.reset();
     },
     /* The search function calls the getData function with a specific query
-      It is triggered whenever the user inputs something in the search bar @input
+      It is triggered @input
        */
     search: function() {
-      this.loading = true;
       //check input for empty string
       if (!this.input) {
         //as per requirement an empty input field will reload the default API call
         this.getMeteorites("$limit=15&$offset=0");
-        //emits error
+        //emits message (not exactely an error in this case, but.. )
         bus.$emit("showErrors", "Default data loaded:)");
       } else if (this.input) {
         try {
@@ -97,7 +94,7 @@ export default {
             );
           });
         } catch (error) {
-          // Pretty sure this doesn't work for some reason:(
+          // hmmmm
           bus.$emit("showErrors", error.message);
         }
       }
