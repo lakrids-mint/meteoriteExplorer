@@ -86,7 +86,7 @@ export default {
         this.getMeteorites("$limit=15&$offset=0");
         //emits message (not exactely an error in this case, but.. )
         bus.$emit("showErrors", "Default data loaded:)");
-      } else if (this.input) {
+      } else if (this.$refs.form.validate()) {
         try {
           /* Because my first solution which lower cased and capitalized user input didn't
           work in the test case of "al-Ghanim" (deep sigh!) I went with this instead
